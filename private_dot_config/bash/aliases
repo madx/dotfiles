@@ -16,8 +16,9 @@ function gitp() {
 alias shell-restart="exec $SHELL -l"
 alias show="bat-pv"
 alias e="$EDITOR"
+alias cz="chezmoi"
 
-if which -s eza; then
+if which eza 2>&1 >/dev/null; then
   alias l="eza --grid --group-directories-first"
   alias ll="eza --long --git --group-directories-first --time-style long-iso"
   alias lt="eza --tree --long --git --group-directories-first --time-style long-iso -I node_modules"
@@ -28,7 +29,7 @@ else
   alias dir="ls --format=vertical"
 fi
 
-if which -s yazi; then
+if which yazi 2>&1 >/dev/null; then
   function yy() {
     local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
     yazi "$@" --cwd-file="$tmp"
