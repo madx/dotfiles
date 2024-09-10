@@ -18,7 +18,7 @@ alias show="bat-pv"
 alias e="$EDITOR"
 alias cz="chezmoi"
 
-if which eza 2>&1 >/dev/null; then
+if which eza >/dev/null 2>&1; then
   alias l="eza --grid --group-directories-first"
   alias ll="eza --long --git --group-directories-first --time-style long-iso"
   alias lt="eza --tree --long --git --group-directories-first --time-style long-iso -I node_modules"
@@ -29,7 +29,7 @@ else
   alias dir="ls --format=vertical"
 fi
 
-if which yazi 2>&1 >/dev/null; then
+if which yazi >/dev/null 2>&1; then
   function yy() {
     local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
     yazi "$@" --cwd-file="$tmp"
