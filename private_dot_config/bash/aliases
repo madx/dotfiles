@@ -8,16 +8,35 @@ function percent-encode {
   jq -s -R -r @uri
 }
 
+# gitp ull
+function gitp() {
+  git p$@
+}
+
+alias shell-restart="exec $SHELL -l"
+alias show="bat-pv"
+alias e="$EDITOR"
+
 if which -s eza; then
-  alias l="eza"
-  alias ls="eza"
-  alias lt="eza -T"
+  alias l="eza --grid --group-directories-first"
+  alias ll="eza --long --git --group-directories-first --time-style long-iso"
+  alias lt="eza --tree --long --git --group-directories-first --time-style long-iso -I node_modules"
   alias dir="eza --oneline"
+  alias ls=l
 else
   alias l="ls --color=always"
   alias dir="ls --format=vertical"
 fi
 
-alias e="$EDITOR"
+if which -s yazi; then
+  function yy() {
+    local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
+    yazi "$@" --cwd-file="$tmp"
+    if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+      cd -- "$cwd"
+    fi
+    rm -f -- "$tmp"
+  }
+fi
 
 [ -r $BASH_CONF_DIR/aliases.local ] && . $BASH_CONF_DIR/aliases.local

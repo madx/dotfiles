@@ -1,6 +1,10 @@
 #!/bin/bash
 
-# Don't do anything if not launched interactively
-[ -z "$PS1" ] && return
+# Actual bashrc file is in XDG_CONFIG_HOME
 
-. $XDG_CONFIG_HOME/bash/bashrc
+# Don't do anything if not launched interactively
+[[ -z "$PS1" ]] && return
+
+XDG_BASHRC="$XDG_CONFIG_HOME/bash/bashrc"
+
+[[ -f "$XDG_BASHRC" ]] && source "$XDG_BASHRC"
