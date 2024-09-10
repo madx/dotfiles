@@ -1,0 +1,17 @@
+#
+# ~/.profile
+#
+
+# System-wide profile
+[[ -f /etc/profile ]] && . /etc/profile
+
+# Make sure XDG directories are defined
+[[ -z ${XDG_CONFIG_HOME+x} ]] && export XDG_CONFIG_HOME="/home/$USER/.config"
+[[ -z ${XDG_DATA_HOME+x} ]] && export XDG_DATA_HOME="/home/$USER/.local/share"
+[[ -z ${XDG_DATA_DIRS+x} ]] && export XDG_DATA_DIRS="/usr/local/share:/usr/share:$XDG_DATA_HOME"
+[[ -z ${XDG_CACHE_HOME+x} ]] && export XDG_CACHE_HOME="/home/$USER/.cache"
+
+# Local overrides
+[[ -f ~/.profile.local ]] && . ~/.profile.local
+
+[[ -f ~/.bashrc ]] && . ~/.bashrc

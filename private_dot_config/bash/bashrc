@@ -1,0 +1,59 @@
+#!/bin/bash
+
+export BASH_CONF_DIR="$XDG_CONFIG_HOME/bash/"
+
+source $BASH_CONF_DIR/environment
+
+# Remove duplicates in history
+export HISTCONTROL=erasedups
+export HISTSIZE=2000
+# Keep a consistent history across shells
+shopt -s histappend
+export PROMPT_COMMAND='history -a'
+
+# Local binaries
+if [ -d $HOME/bin ]; then
+  export PATH=$HOME/bin:$PATH
+fi
+
+if [ -d $XDG_DATA_HOME/bin ]; then
+  export PATH=$XDG_DATA_HOME/bin:$PATH
+fi
+
+# Update LINES and COLUMNS vars after window resizing
+shopt -s checkwinsize
+
+# Improve less output for non-text data
+[ -x /usr/bin/lesspipe ] && eval "$(lesspipe)"
+
+# Add aliases
+if [ -f $BASH_CONF_DIR/aliases ]; then
+  source $BASH_CONF_DIR/aliases
+fi
+
+# Setup completion
+if [ -r /usr/share/bash-completion/bash_completion ]; then
+  source /usr/share/bash-completion/bash_completion
+fi
+if [ -r /usr/local/etc/profile.d/bash_completion.sh ]; then
+  source /usr/local/etc/profile.d/bash_completion.sh
+fi
+if [ -f $BASH_CONF_DIR/completion ]; then
+  source $BASH_CONF_DIR/completion
+fi
+
+# Prompt configuration
+export PS1='\[\e[${PC}m\]\W\[\e[0m\] $ '
+if [ -f $BASH_CONF_DIR/prompt ]; then
+  source $BASH_CONF_DIR/prompt
+fi
+
+# cd back to last used directory unless in tmux or chezmoi
+if [[ -z $TMUX ]] && [ -f $XDG_CACHE_HOME/last_working_directory ] && [ "$PWD" != "$HOME/.local/share/chezmoi" ]; then
+  cd "$(cat $XDG_CACHE_HOME/last_working_directory)"
+fi
+
+# Import local overrides
+if [ -f $BASH_CONF_DIR/bashrc.local ]; then
+  source $BASH_CONF_DIR/bashrc.local
+fi

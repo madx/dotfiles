@@ -1,0 +1,23 @@
+#!/bin/bash
+
+function pidenv {
+  cat /proc/$1/environ | tr '\0' '\n'
+}
+
+function percent-encode {
+  jq -s -R -r @uri
+}
+
+if which -s eza; then
+  alias l="eza"
+  alias ls="eza"
+  alias lt="eza -T"
+  alias dir="eza --oneline"
+else
+  alias l="ls --color=always"
+  alias dir="ls --format=vertical"
+fi
+
+alias e="$EDITOR"
+
+[ -r $BASH_CONF_DIR/aliases.local ] && . $BASH_CONF_DIR/aliases.local

@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# Don't do anything if not launched interactively
+[ -z "$PS1" ] && return
+
+. $XDG_CONFIG_HOME/bash/bashrc
