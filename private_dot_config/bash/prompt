@@ -62,12 +62,12 @@ function __hbar {
 }
 
 function _save_wd {
-  pwd > $XDG_CACHE_HOME/last_working_directory
+  pwd >$XDG_CACHE_HOME/last_working_directory
 }
 
 function _save_venv {
   if [ -n "$VIRTUAL_ENV" ]; then
-    echo "$VIRTUAL_ENV" > $XDG_CACHE_HOME/last_venv
+    echo "$VIRTUAL_ENV" >$XDG_CACHE_HOME/last_venv
   else
     rm -f $XDG_CACHE_HOME/last_venv
   fi
@@ -76,9 +76,10 @@ function _save_venv {
 export PS1='\[\e[G\e[0;30m\]$(__hbar)\[\e[0m\]\r$(__prompt_docker_id)\[\e[1;${PC}m\]$(__prompt_git_wd)\[\e[0m\]$(__prompt_git_branch)\[\e[0;32m\]$(__prompt_venv)\[\e[0m\]`if [ "$__RET" -ne "0" ]; then echo " \e[41;30m $__RET \e[0m"; fi` \n\[\e[1m\]❯\[\e[0m\] '
 
 case "$TERM" in
-xterm*|rxvt*|screen*|st*|alacritty*)
+xterm* | rxvt* | screen* | st* | alacritty* | foot*)
   PROMPT_COMMAND='__RET=$?;_COLS=`tput cols`;_save_wd;_save_venv;echo -ne "\033]0;$USER@$HOSTNAME: $(__prompt_docker_id)$(__prompt_git_wd)$(__prompt_git_branch)\007";history -a'
   ;;
 *)
   PROMPT_COMMAND='__RET=$?;history -a'
+  ;;
 esac
