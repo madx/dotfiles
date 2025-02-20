@@ -43,7 +43,7 @@ function __prompt_git_wd {
 
 function __prompt_docker_id {
   if [ -f /.dockerenv ]; then
-    echo "[${HOSTNAME})] "
+    echo "[${HOSTNAME}] "
   fi
 }
 
