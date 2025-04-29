@@ -16,6 +16,7 @@ function gitp() {
 alias shell-restart="exec $SHELL -l"
 alias show="bat-pv"
 alias v="$EDITOR"
+alias vim="$EDITOR"
 alias cz="chezmoi"
 
 if which eza >/dev/null 2>&1; then
